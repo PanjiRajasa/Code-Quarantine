@@ -1,64 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AJAX</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <!-- Header content such as logo and main navigation goes here -->
+      <!-- Header content such as logo and main navigation goes here -->
     </header>
-    
+
     <nav>
-        <!-- Navigation links go here -->
+      <!-- Navigation links go here -->
     </nav>
 
     <main>
-        <section>
-            <!-- Main section content goes here -->
-             <button onclick="makeRequest()">Make Request 1</button>
-             <div id="demo"></div>
-        </section>
+      <section>
+        <!-- Main section content goes here -->
+        <button onclick="makeRequest()">Make Request 1</button>
+        <div id="demo">(Server response)</div>
+      </section>
 
-        <section>
-            <!-- Another section content goes here -->
-        </section>
+      <section>
+        <!-- Another section content goes here -->
+        <button onclick="sendGetRequest()">Make Request 2</button>
+        <div id="demo2">(Server response)</div>
+      </section>
 
-        <article>
-            <!-- Article content goes here -->
-        </article>
+      <article>
+        <!-- Article content goes here -->
+        <button onclick="sendGetRequest3()">Make Request 3</button>
+        <div id="demo3">(Server response)</div>
+      </article>
 
-        <aside>
-            <!-- Sidebar or additional content goes here -->
-        </aside>
+      <aside>
+        <!-- Sidebar or additional content goes here -->
+        <button onclick="sendPostRequest()">
+          Send POST Request With Information
+        </button>
+        <div id="demo4"></div>
+      </aside>
+
+      <article>
+        <!-- Article content goes here -->
+        <button onclick="sendGetRequest4()">Request</button>
+        <div id="demo5">(Server response)</div>
+      </article>
     </main>
 
     <footer>
-        <!-- Footer content goes here -->
+      <!-- Footer content goes here -->
     </footer>
 
     <script type="text/javascript">
+      // Create a new XMLHttpRequest object to handle the AJAX request
+      const httpRequest = new XMLHttpRequest();
 
-        const httpRequest = new XMLHttpRequest();
+      // Function to make the AJAX request
+      function makeRequest() {
+        // Assign the callback function that will be triggered when the state changes
+        httpRequest.onreadystatechange = writeContent;
 
-        function makeRequest() {
-            httpRequest.onreadystatechange = writeContent;
+        // Open a new GET request to the specified URL
+        httpRequest.open("GET", "https://codeliber.com/test-server.php");
 
-            httpRequest.open("GET", "https://codeliber.com/test-server.php");
-            httpRequest.send();
+        // Send the request
+        httpRequest.send();
+      }
 
+      // Callback function to handle the response when the state changes
+      function writeContent() {
+        // Check if the request is complete (readyState 4)
+        if (httpRequest.readyState === 4) {
+          // Check if the request was successful (status 200)
+          if (httpRequest.status === 200) {
+            // Update the content of the element with ID "demo" with the response text
+            document.getElementById("demo").innerHTML =
+              httpRequest.responseText;
+          } else {
+            // Display an alert if there was a problem with the request
+            alert("There was a problem with the request.");
+          }
         }
+      }
 
-        function writeContent() {
-            if (httpRequest.readyState === 4) {
-                if (httpRequest.status === 200) {
-                    document.getElementById("demo").innerHTML = httpRequest.responseText;
-                } else {
-                    alert("There was a problem with the request.");
-                }
+      // Create a new XMLHttpRequest object for the second AJAX request
+      const httpRequest2 = new XMLHttpRequest();
+
+      // Function to make the second GET request
+      function sendGetRequest() {
+        // Assign the callback function for handling the response
+        httpRequest2.onreadystatechange = writeContent2;
+
+        // Open a GET request to the specified URL
+        httpRequest2.open("GET", "https://codeliber.com/test-server.php");
+
+        // Send the GET request
+        httpRequest2.send();
+      }
+
+      // Callback function to handle the response for the second request
+      function writeContent2() {
+        // Check if the request is complete
+        if (httpRequest2.readyState === 4) {
+          // Check if the request was successful
+          if (httpRequest2.status === 200) {
+            // Update the content of the element with ID "demo2" with the response text
+            document.getElementById("demo2").innerHTML =
+              httpRequest2.responseText;
+          } else {
+            // Display an alert if there was a problem with the request
+            alert("There was a problem with the request.");
+          }
+        }
+      }
+
+      // Create a new XMLHttpRequest object for the third AJAX request
+      const httpRequest3 = new XMLHttpRequest();
+
+      // Function to make the third GET request
+      function sendGetRequest3() {
+        // Assign the callback function for handling the response
+        httpRequest3.onreadystatechange = writeContent3;
+
+        // Open a GET request to the specified URL
+        httpRequest3.open("GET", "https://codeliber.com/test-server.php");
+
+        // Send the GET request
+        httpRequest3.send();
+      }
+
+      // Callback function to handle the response for the third request
+      function writeContent3() {
+        // Check if the request is complete
+        if (httpRequest3.readyState === 4) {
+          // Check if the request was successful
+          if (httpRequest3.status === 200) {
+            // Update the content of the element with ID "demo3" with the response text
+            document.getElementById("demo3").innerHTML =
+              httpRequest3.responseText;
+          } else {
+            // Display an alert if there was a problem with the request
+            alert("There was a problem with the request.");
+          }
+        }
+      }
+
+      // Create a new XMLHttpRequest object for the POST request
+      const httpRequest4 = new XMLHttpRequest();
+
+      // Function to make a POST request
+      function sendPostRequest() {
+        // Assign the callback function for handling the response
+        httpRequest4.onreadystatechange = writeContent4;
+
+        // Open a POST request to the specified URL
+        httpRequest4.open("POST", "https://codeliber.com/test-server.php");
+
+        // Set the request header for form data
+        httpRequest4.setRequestHeader(
+          "Content-Type",
+          "application/x-www-form-urlencoded"
+        );
+
+        // Send the POST request with form data (firstName and lastName)
+        httpRequest4.send("firstName=John&lastName=Doe");
+      }
+
+      // Callback function to handle the response for the POST request
+      function writeContent4() {
+        // Check if the request is complete
+        if (httpRequest4.readyState === 4) {
+          // Check if the request was successful
+          if (httpRequest4.status === 200) {
+            // Update the content of the element with ID "demo4" with the response text
+            document.getElementById("demo4").innerHTML =
+              httpRequest4.responseText;
+          } else {
+            // Display an alert if there was a problem with the request
+            alert("There was a problem with the request.");
+          }
+        }
+      }
+
+      const httpRequest5 = new XMLHttpRequest();
+
+      function sendGetRequest4() {
+        httpRequest5.onreadystatechange = writeContent5;
+
+        httpRequest5.open("GET", "https://codeliber.com/test-server.php");
+        httpRequest5.send();
+      }
+
+      function writeContent5() {
+        if(httpRequest5.readyState === 4) {
+            if (httpRequest5.status === 200) {
+                document.getElementById("demo5").innerHTML = httpRequest5.responseText;
+            } else {
+            alert("There was a problem with the request.");
             }
         }
+      }
     </script>
-</body>
+  </body>
 </html>
